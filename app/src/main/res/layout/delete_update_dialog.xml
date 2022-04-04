@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+            <variable
+                name="model"
+                type="com.example.attendenceapp.pojo.BatchPOJO" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/LayoutTeacherName"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="300dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/teacher_name"
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/ic_person">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ed_teacherName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/LayoutClassTime"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="@string/class_time"
+            app:endIconMode="clear_text"
+            android:layout_gravity="center"
+            app:helperTextTextColor="@color/red"
+            app:startIconDrawable="@drawable/ic_clock">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ed_classTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/LayoutBatchName"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="@string/batch_name"
+            app:endIconMode="clear_text"
+            android:layout_gravity="center"
+            app:startIconDrawable="@drawable/ic_batch">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ed_batchName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/bt_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update"
+                android:layout_margin="10dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>
