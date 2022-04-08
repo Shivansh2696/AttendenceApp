@@ -1,15 +1,16 @@
 package com.example.attendenceapp.FirebaseDB;
 
-import com.example.attendenceapp.pojo.BatchPOJO;
-import com.example.attendenceapp.pojo.StudentPOJO;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.example.attendenceapp.model.BatchModel;
+import com.example.attendenceapp.model.StudentModel;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class FirebaseDB{
 
-    private DatabaseReference databaseReference;
-    private FirebaseCommonDB<BatchPOJO> batchDB;
-    private FirebaseCommonDB<StudentPOJO> studentDB;
+    private CollectionReference databaseReference;
+    private FirebaseCommonDB<BatchModel> batchDB;
+    private FirebaseCommonDB<StudentModel> studentDB;
+     String batchName;
     private static FirebaseDB instance;
 
     public static FirebaseDB getInstance() {
@@ -19,18 +20,20 @@ public class FirebaseDB{
     }
 
     private FirebaseDB(){
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("batch");
-        batchDB = new FirebaseCommonDB(databaseReference, BatchPOJO.class);
+        databaseReference = FirebaseFirestore.getInstance().collection("BatchList");
+        batchDB = new FirebaseCommonDB(BatchModel.class,databaseReference);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("batch").child("Student");
-        studentDB = new FirebaseCommonDB(databaseReference, StudentPOJO.class);
+//        databaseReference = FirebaseDatabase.getInstance().getReference().child("BatchList").push().child("Student");
+//        studentDB = new FirebaseCommonDB(databaseReference, StudentPOJO.class);
     }
 
-    public FirebaseCommonDB<BatchPOJO> getBatchDB() {
+    public FirebaseCommonDB<BatchModel> getBatchDB() {
         return batchDB;
     }
 
-    public FirebaseCommonDB<StudentPOJO> getStudentDB() {
+    public FirebaseCommonDB<StudentModel> getStudentDB() {
         return studentDB;
     }
+
+
 }

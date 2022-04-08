@@ -10,24 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.library.baseAdapters.BR;
 
-import com.example.attendenceapp.FirebaseDB.FirebaseCommonDB;
 import com.example.attendenceapp.FirebaseDB.FirebaseDB;
 import com.example.attendenceapp.R;
 import com.example.attendenceapp.databinding.DeleteUpdateDialogBinding;
-import com.example.attendenceapp.pojo.BatchPOJO;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.example.attendenceapp.model.BatchModel;
 
 import java.util.Objects;
 
 public class DeleteAndUpdateDialog extends Dialog implements View.OnClickListener{
     DeleteUpdateDialogBinding binding;
-    private BatchPOJO batchPOJO;
-    public DeleteAndUpdateDialog(@NonNull Context context,BatchPOJO batchPOJO) {
+    private BatchModel batchModel;
+    public DeleteAndUpdateDialog(@NonNull Context context, BatchModel batchModel) {
         super(context);
-        this.batchPOJO = batchPOJO;
+        this.batchModel = batchModel;
         setCancelable(true);
     }
 
@@ -36,7 +31,7 @@ public class DeleteAndUpdateDialog extends Dialog implements View.OnClickListene
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.delete_update_dialog,null,false);
         setContentView(binding.getRoot());
-        binding.setVariable(BR.model,batchPOJO);
+        binding.setVariable(BR.model, batchModel);
         binding.btUpdate.setOnClickListener(this);
     }
 
@@ -53,8 +48,8 @@ public class DeleteAndUpdateDialog extends Dialog implements View.OnClickListene
 //            }
 
             if(id == binding.btUpdate.getId()){
-                batchPOJO.setTeacherName(Objects.requireNonNull(binding.edTeacherName).getText().toString());
-                FirebaseDB.getInstance().getBatchDB().update(batchPOJO.getKey(),batchPOJO).addOnCompleteListener(task -> {
+                batchModel.setTeacherName(Objects.requireNonNull(binding.edTeacherName).getText().toString());
+                FirebaseDB.getInstance().getBatchDB().update(batchModel.getKey(), batchModel).addOnCompleteListener(task -> {
                     if(task.isSuccessful())
                         Toast.makeText(getContext(), "Table Updated", Toast.LENGTH_SHORT).show();
                     else Toast.makeText(getContext(), "Something Went Wrong", Toast.LENGTH_SHORT).show();

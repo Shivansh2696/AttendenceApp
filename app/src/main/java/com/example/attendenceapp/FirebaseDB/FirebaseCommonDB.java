@@ -1,21 +1,33 @@
 package com.example.attendenceapp.FirebaseDB;
 
+
 import androidx.lifecycle.MutableLiveData;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public class FirebaseCommonDB <T> {
-    private T model;
-    private final DatabaseReference databaseReference;
+    private final Class<T> model;
+    private final CollectionReference documentReference;
+    DatabaseReference databaseReference;
 
-    public FirebaseCommonDB(DatabaseReference databaseReference, Class<T> tClass) {
-        this.databaseReference = databaseReference;
-        this.model = (T) tClass;
+
+    public Task<Void> add(String key,T model, MutableLiveData<Boolean> completeLiveData){
+        return documentReference.document(key).set(model).addOnCompleteListener(task -> {
+            if(completeLiveData != null){
+                completeLiveData.setValue(true);
+            }
+        });
     }
 
-    public Task<Void> add(T model,MutableLiveData<Boolean> completeLiveData){
-        return databaseReference.push().setValue(model).addOnCompleteListener(task -> {
+    public Task<Void> add(T model, MutableLiveData<Boolean> completeLiveData){
+        return documentReference.document().set(model).addOnCompleteListener(task -> {
             if(completeLiveData != null){
                 completeLiveData.setValue(true);
             }

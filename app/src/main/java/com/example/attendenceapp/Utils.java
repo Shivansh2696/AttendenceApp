@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.io.ByteArrayOutputStream;
+import java.util.UUID;
 
 public class Utils {
 
@@ -32,6 +33,12 @@ public class Utils {
     public static Bitmap convertStringTOBitmap(String stringImage){
         byte[] decodedString = Base64.decode(stringImage,Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(decodedString,0,decodedString.length);
+    }
+
+    public static String uuid(String key){
+        String result = UUID.nameUUIDFromBytes(key.getBytes()).toString();
+        result=result.replace("-","").substring(0,15).toUpperCase();
+        return result;
     }
 
 }

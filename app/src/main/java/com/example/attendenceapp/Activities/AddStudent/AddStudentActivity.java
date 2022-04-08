@@ -22,17 +22,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.attendenceapp.Activities.AddBatch.AddBatchActivity;
 import com.example.attendenceapp.R;
 import com.example.attendenceapp.Utils;
 import com.example.attendenceapp.databinding.ActivityAddStudentBinding;
-import com.example.attendenceapp.pojo.StudentPOJO;
+import com.example.attendenceapp.model.StudentModel;
 
 import java.util.Objects;
 
 public class AddStudentActivity extends AppCompatActivity {
     ActivityAddStudentBinding binding;
-    StudentPOJO student;
+    StudentModel student;
     AddStudentViewModel viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +39,7 @@ public class AddStudentActivity extends AppCompatActivity {
         binding = ActivityAddStudentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        student = new StudentPOJO();
+        student = new StudentModel();
         viewModel = new ViewModelProvider(this).get(AddStudentViewModel.class);
         viewModel.getCompleteLiveData().observe(this, new Observer<Boolean>() {
             @Override
@@ -55,7 +54,7 @@ public class AddStudentActivity extends AppCompatActivity {
             student.setStudentName(Objects.requireNonNull(binding.StudentName.getText()).toString());
             student.setStudentPhone(Objects.requireNonNull(binding.StudentPhone.getText()).toString());
             student.setStudentAddress(Objects.requireNonNull(binding.StudentAddress.getText()).toString());
-            student.setImage(Utils.convertImageToString(binding.CapturedImage));
+            student.setStudentImage(Utils.convertImageToString(binding.CapturedImage));
             viewModel.setStudent(student);
             binding.Progress.setVisibility(View.VISIBLE);
         });

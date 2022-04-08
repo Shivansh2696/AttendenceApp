@@ -4,16 +4,16 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.attendenceapp.FirebaseDB.FirebaseDB;
-import com.example.attendenceapp.pojo.StudentPOJO;
+import com.example.attendenceapp.model.StudentModel;
 
 public class AddStudentViewModel extends ViewModel {
     MutableLiveData<Boolean> completeLiveData;
-    private StudentPOJO student;
+    private StudentModel student;
     public AddStudentViewModel() {
      completeLiveData = new MutableLiveData<>();
     }
 
-    public void setStudent(StudentPOJO student) {
+    public void setStudent(StudentModel student) {
         FirebaseDB.getInstance().getStudentDB().add(student,completeLiveData);
     }
 

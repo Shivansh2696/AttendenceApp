@@ -7,6 +7,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class StudentDetailViewModel extends ViewModel {
     public DatabaseReference getStudentList(){
-        return FirebaseDatabase.getInstance().getReference().child("batch").child("Student");
+        return FirebaseDatabase.getInstance().getReference().child("BatchList").child("Student");
     }
 }

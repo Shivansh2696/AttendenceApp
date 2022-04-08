@@ -14,17 +14,19 @@ import com.example.attendenceapp.FirebaseDB.FirebaseDB;
 import com.example.attendenceapp.Fragments.AddStudentDetail.AddStudentDetailFragment;
 import com.example.attendenceapp.R;
 import com.example.attendenceapp.databinding.ActivityBatchDetailsBinding;
-import com.example.attendenceapp.pojo.BatchPOJO;
+import com.example.attendenceapp.databinding.FragmentAddStudentDetailBinding;
+import com.example.attendenceapp.model.BatchModel;
 
 public class BatchDetailsActivity extends AppCompatActivity {
     ActivityBatchDetailsBinding binding;
-    BatchPOJO batch;
+    BatchModel batch;
     AddStudentDetailFragment detailFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityBatchDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        batch = (BatchModel) getIntent().getExtras().getSerializable("BatchDetails");
         detailFragment = new AddStudentDetailFragment();
         replaceFrame(detailFragment);
     }
@@ -47,6 +49,7 @@ public class BatchDetailsActivity extends AppCompatActivity {
                 else Toast.makeText(BatchDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
             });
         }
+
         return super.onOptionsItemSelected(item);
     }
 

@@ -14,10 +14,13 @@ import android.widget.Toast;
 import com.example.attendenceapp.Activities.AddBatch.AddBatchActivity;
 import com.example.attendenceapp.Adapter.MainRecyclerAdapter;
 import com.example.attendenceapp.databinding.ActivityMainBinding;
-import com.example.attendenceapp.pojo.BatchPOJO;
+import com.example.attendenceapp.model.BatchModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     MainRecyclerAdapter adapter;
     MainViewModel viewModel;
-    private final List<BatchPOJO> batchList = new ArrayList<>();
+    private List<BatchModel> batchList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,23 +46,19 @@ public class MainActivity extends AppCompatActivity {
 
         binding.AddBatch.setOnClickListener(this::OnClick);
 
-        viewModel.getBatch().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                batchList.clear();
-                for (DataSnapshot child : snapshot.getChildren()) {
-                    BatchPOJO batch = child.getValue(BatchPOJO.class);
-                    batch.setKey(child.getKey());
-                    batchList.add(batch);
-                }
-                adapter.setList(batchList);
-            }
+       viewModel.getBatch().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+           @Override
+           public void onComplete(@NonNull Task<QuerySnapshot> task) {
+               if(task.isSuccessful()){
+                   batchList.clear();
+                   batchList = task.getResult().toObjects(BatchModel.class);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(MainActivity.this, "There is No Data In The List", Toast.LENGTH_SHORT).show();
-            }
-        });
+                   adapter.setList(batchList);
+               }
+           }
+       });
+
+
     }
 
     private void OnClick(View view) {

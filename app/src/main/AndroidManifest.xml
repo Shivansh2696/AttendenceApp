@@ -27,15 +27,16 @@
             android:exported="false"
             android:label="Batch Detail"
             android:parentActivityName=".MainActivity.MainActivity" />
-        <activity
-            android:name=".MainActivity.MainActivity"
+        <activity android:name=".Activities.LogInActivity.LogInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+        <activity
+            android:name=".MainActivity.MainActivity"/>
     </application>
 
 </manifest>

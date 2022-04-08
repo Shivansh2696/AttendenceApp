@@ -17,8 +17,8 @@ import com.example.attendenceapp.Activities.AddStudent.AddStudentActivity;
 import com.example.attendenceapp.Adapter.StudentRecyclerAdapter;
 import com.example.attendenceapp.Utils;
 import com.example.attendenceapp.databinding.FragmentAddStudentDetailBinding;
-import com.example.attendenceapp.pojo.BatchPOJO;
-import com.example.attendenceapp.pojo.StudentPOJO;
+import com.example.attendenceapp.model.BatchModel;
+import com.example.attendenceapp.model.StudentModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -28,9 +28,9 @@ import java.util.List;
 public class AddStudentDetailFragment extends Fragment {
     FragmentAddStudentDetailBinding binding;
     RecyclerView recyclerView;
-    BatchPOJO batch;
+    BatchModel batch;
     StudentRecyclerAdapter adapter;
-    private final List<StudentPOJO> studentList = new ArrayList<>();
+    private final List<StudentModel> studentList = new ArrayList<>();
     StudentDetailViewModel viewModel;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class AddStudentDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentAddStudentDetailBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(this).get(StudentDetailViewModel.class);
-        batch = (BatchPOJO) getActivity().getIntent().getExtras().getSerializable("BatchDetails");
+        batch = (BatchModel) getActivity().getIntent().getExtras().getSerializable("BatchDetails");
         recyclerView = binding.StudentRecyclerView;
         adapter = new StudentRecyclerAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -53,8 +53,8 @@ public class AddStudentDetailFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 studentList.clear();
                 for (DataSnapshot child : snapshot.getChildren()){
-                    StudentPOJO student = child.getValue(StudentPOJO.class);
-                    student.setKey(child.getKey());
+                    StudentModel student = child.getValue(StudentModel.class);
+                    student.setStudentId(child.getKey());
                     studentList.add(student);
                 }
                 adapter.setList(studentList);

@@ -5,7 +5,7 @@
     <data>
             <variable
                 name="model"
-                type="com.example.attendenceapp.pojo.BatchPOJO" />
+                type="com.example.attendenceapp.model.BatchModel" />
     </data>
 
     <LinearLayout

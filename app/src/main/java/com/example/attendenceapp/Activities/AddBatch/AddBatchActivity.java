@@ -23,7 +23,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.attendenceapp.databinding.ActivityAddBatchBinding;
-import com.example.attendenceapp.pojo.BatchPOJO;
+import com.example.attendenceapp.model.BatchModel;
 import com.example.attendenceapp.R;
 import com.example.attendenceapp.Utils;
 
@@ -54,7 +54,7 @@ public class AddBatchActivity extends AppCompatActivity {
     private void Onclick(View view) {
         int id = view.getId();
         if(id == binding.Create.getId()){
-            BatchPOJO batch = new BatchPOJO();
+            BatchModel batch = new BatchModel();
             batch.setTeacherName(Objects.requireNonNull(binding.TeacherName.getText()).toString());
             batch.setClassTime(Objects.requireNonNull(binding.ClassTime.getText()).toString());
             batch.setBatchName(Objects.requireNonNull(binding.BatchName.getText()).toString());
