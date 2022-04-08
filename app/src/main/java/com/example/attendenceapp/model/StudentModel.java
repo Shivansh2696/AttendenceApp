@@ -6,6 +6,6 @@ import lombok.Data;
 
 @Data
 public class StudentModel implements Serializable {
-    private String studentName,studentPhone,studentAddress,studentId,studentImage,teacherID;
+    private String studentName,studentPhone,studentAddress,studentId,studentImage,teacherID,batchID;
     private Long date;
 }

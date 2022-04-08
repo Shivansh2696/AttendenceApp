@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
                if(task.isSuccessful()){
                    batchList.clear();
                    batchList = task.getResult().toObjects(BatchModel.class);
-
                    adapter.setList(batchList);
                }
            }

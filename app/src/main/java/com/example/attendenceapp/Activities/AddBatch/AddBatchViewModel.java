@@ -24,7 +24,6 @@ public class AddBatchViewModel extends ViewModel {
         batch.setDateOn(new Date().getTime());
         String string = batch.getBatchName() + batch.getUserID();
         batch.setKey(Utils.uuid(string));
-
         FirebaseDB.getInstance().getBatchDB().add(batch.getKey(),batch,completeLiveData);
     }
     public LiveData<Boolean> getCompleteLiveData() {

@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.example.attendenceapp.R;
 import com.example.attendenceapp.Utils;
 import com.example.attendenceapp.databinding.ActivityAddStudentBinding;
+import com.example.attendenceapp.model.BatchModel;
 import com.example.attendenceapp.model.StudentModel;
 
 import java.util.Objects;
@@ -32,13 +33,14 @@ import java.util.Objects;
 public class AddStudentActivity extends AppCompatActivity {
     ActivityAddStudentBinding binding;
     StudentModel student;
+    BatchModel batch;
     AddStudentViewModel viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAddStudentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        batch = (BatchModel) getIntent().getExtras().getSerializable("batchModel");
         student = new StudentModel();
         viewModel = new ViewModelProvider(this).get(AddStudentViewModel.class);
         viewModel.getCompleteLiveData().observe(this, new Observer<Boolean>() {
@@ -55,7 +57,7 @@ public class AddStudentActivity extends AppCompatActivity {
             student.setStudentPhone(Objects.requireNonNull(binding.StudentPhone.getText()).toString());
             student.setStudentAddress(Objects.requireNonNull(binding.StudentAddress.getText()).toString());
             student.setStudentImage(Utils.convertImageToString(binding.CapturedImage));
-            viewModel.setStudent(student);
+            viewModel.setStudent(student,batch.getKey());
             binding.Progress.setVisibility(View.VISIBLE);
         });
 

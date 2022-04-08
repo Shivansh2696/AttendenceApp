@@ -23,8 +23,8 @@ public class FirebaseDB{
         databaseReference = FirebaseFirestore.getInstance().collection("BatchList");
         batchDB = new FirebaseCommonDB(BatchModel.class,databaseReference);
 
-//        databaseReference = FirebaseDatabase.getInstance().getReference().child("BatchList").push().child("Student");
-//        studentDB = new FirebaseCommonDB(databaseReference, StudentPOJO.class);
+        databaseReference = FirebaseFirestore.getInstance().collection("StudentList");
+        studentDB = new FirebaseCommonDB(StudentModel.class,databaseReference);
     }
 
     public FirebaseCommonDB<BatchModel> getBatchDB() {

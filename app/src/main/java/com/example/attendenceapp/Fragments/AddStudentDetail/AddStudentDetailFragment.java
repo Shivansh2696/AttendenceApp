@@ -19,9 +19,15 @@ import com.example.attendenceapp.Utils;
 import com.example.attendenceapp.databinding.FragmentAddStudentDetailBinding;
 import com.example.attendenceapp.model.BatchModel;
 import com.example.attendenceapp.model.StudentModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +36,7 @@ public class AddStudentDetailFragment extends Fragment {
     RecyclerView recyclerView;
     BatchModel batch;
     StudentRecyclerAdapter adapter;
-    private final List<StudentModel> studentList = new ArrayList<>();
+    private List<StudentModel> studentList = new ArrayList<>();
     StudentDetailViewModel viewModel;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,21 +54,15 @@ public class AddStudentDetailFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-        viewModel.getStudentList().addValueEventListener(new ValueEventListener() {
+        viewModel.getStudentList(batch.getKey()).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                studentList.clear();
-                for (DataSnapshot child : snapshot.getChildren()){
-                    StudentModel student = child.getValue(StudentModel.class);
-                    student.setStudentId(child.getKey());
-                    studentList.add(student);
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(value != null) {
+                    studentList = value.toObjects(StudentModel.class);
+                    adapter.setList(studentList);
+                }else{
+                    Toast.makeText(getContext(), "Error :" + error, Toast.LENGTH_SHORT).show();
                 }
-                adapter.setList(studentList);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "There is No Data In The List", Toast.LENGTH_SHORT).show();
             }
         });
         return binding.getRoot();
@@ -85,7 +85,9 @@ public class AddStudentDetailFragment extends Fragment {
         int id = view.getId();
         if(id == binding.AddStudent.getId()){
             Intent intent = new Intent(getContext(), AddStudentActivity.class);
-            startActivity(intent);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("batchModel",batch);
+            startActivity(intent.putExtras(bundle));
         }
     }
 //    public void replaceFrame(Fragment fragment){

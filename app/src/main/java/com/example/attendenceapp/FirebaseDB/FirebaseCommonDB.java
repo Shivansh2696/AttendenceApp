@@ -26,14 +26,6 @@ public class FirebaseCommonDB <T> {
         });
     }
 
-    public Task<Void> add(T model, MutableLiveData<Boolean> completeLiveData){
-        return documentReference.document().set(model).addOnCompleteListener(task -> {
-            if(completeLiveData != null){
-                completeLiveData.setValue(true);
-            }
-        });
-    }
-
     // getting of data
     public Query get(){
         return databaseReference;
