@@ -14,16 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import com.example.attendenceapp.Activities.AddStudent.AddStudentActivity;
+import com.example.attendenceapp.Activities.BatchDetails.BatchDetailsActivity;
 import com.example.attendenceapp.Adapter.StudentRecyclerAdapter;
+import com.example.attendenceapp.Fragments.MakeAttendence.MakeAttendenceFragment;
 import com.example.attendenceapp.Utils;
 import com.example.attendenceapp.databinding.FragmentAddStudentDetailBinding;
 import com.example.attendenceapp.model.BatchModel;
 import com.example.attendenceapp.model.StudentModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -38,6 +35,7 @@ public class AddStudentDetailFragment extends Fragment {
     StudentRecyclerAdapter adapter;
     private List<StudentModel> studentList = new ArrayList<>();
     StudentDetailViewModel viewModel;
+    MakeAttendenceFragment makeAttendanceFragment;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +48,7 @@ public class AddStudentDetailFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(StudentDetailViewModel.class);
         batch = (BatchModel) getActivity().getIntent().getExtras().getSerializable("BatchDetails");
         recyclerView = binding.StudentRecyclerView;
+        makeAttendanceFragment =  new MakeAttendenceFragment();
         adapter = new StudentRecyclerAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
@@ -78,23 +77,22 @@ public class AddStudentDetailFragment extends Fragment {
         }
         binding.BatchName.setText(batch.getBatchName());
         binding.AddStudent.setOnClickListener(this::Onclick);
+        binding.MakeAttendence.setOnClickListener(this::Onclick);
 
     }
 
     private void Onclick(View view) {
         int id = view.getId();
-        if(id == binding.AddStudent.getId()){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("batchModel", batch);
+        if (id == binding.AddStudent.getId()) {
             Intent intent = new Intent(getContext(), AddStudentActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("batchModel",batch);
             startActivity(intent.putExtras(bundle));
         }
+        if (id == binding.MakeAttendence.getId()) {
+            BatchDetailsActivity activity = (BatchDetailsActivity) getActivity();
+            makeAttendanceFragment.setArguments(bundle);
+            activity.replaceFrame(makeAttendanceFragment);
+        }
     }
-//    public void replaceFrame(Fragment fragment){
-//        getChildFragmentManager()
-//                .beginTransaction()
-//                .replace(R.id.mainFrame,fragment)
-//                .addToBackStack(fragment.getClass().getName())
-//                .commit();
-//    }
 }

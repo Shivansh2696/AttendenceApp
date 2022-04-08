@@ -61,6 +61,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Add Student" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/MakeAttendence"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:text="Make Attendence" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/SeeAttendence"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:text="Attendence Log" />
                 </LinearLayout>
             </ScrollView>
         </androidx.cardview.widget.CardView>
